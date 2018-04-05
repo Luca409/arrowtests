@@ -96,8 +96,42 @@ def test4():
     compare_intervals(interval, expected_interval)
     print('test4 passed!')
 
+def test5():
+    ''' Sixth test. Using the week frame spanning ~3 weeks. '''
+    # should be March 25th 2018 at noon
+    begin = datetime.datetime(2018, 3, 25, 12)
+    # should be April 5th 2018 at 11 am
+    end = datetime.datetime(2018, 4, 5, 11)
+    interval = arrow.Arrow.span_range('week', begin, end)
+
+    expected_interval = [(arrow.Arrow(2018, 3, 25, 12), arrow.Arrow(2018, 3, 25, 23, 59, 59, 999999)),
+                         (arrow.Arrow(2018, 3, 26), arrow.Arrow(2018, 4, 1, 23, 59, 59, 999999)),
+                         (arrow.Arrow(2018, 4, 2), arrow.Arrow(2018, 4, 5, 10, 59, 59, 999999))]
+
+    compare_intervals(interval, expected_interval)
+    print('test5 passed!')
+
+def test6():
+    ''' Seventh test. Using the day fram spanning ~3 days. '''
+    # should begin April 2nd at 10:10:10:10
+    begin = datetime.datetime(2018, 4, 2, 10, 10, 10, 10)
+    # should end April 5th at 16:14:53:99
+    end = datetime.datetime(2018, 4, 5, 16, 14, 53, 99)
+    interval = arrow.Arrow.span_range('day', begin, end)\
+
+    expected_interval = [(arrow.Arrow(2018, 4, 2, 10, 10, 10, 10), arrow.Arrow(2018, 4, 2, 23, 59, 59, 999999)),
+                         (arrow.Arrow(2018, 4, 3), arrow.Arrow(2018, 4, 3, 23, 59, 59, 999999)),
+                         (arrow.Arrow(2018, 4, 4), arrow.Arrow(2018, 4, 4, 23, 59, 59, 999999)),
+                         (arrow.Arrow(2018, 4, 5), arrow.Arrow(2018, 4, 5, 16, 14, 53, 98))]
+
+    compare_intervals(interval, expected_interval)
+    print('test6 passed!')
+
+
 test0()
 test1()
 test2()
 test3()
 test4()
+test5()
+test6()
