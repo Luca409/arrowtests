@@ -112,7 +112,7 @@ def test5():
     print('test5 passed!')
 
 def test6():
-    ''' Seventh test. Using the day fram spanning ~3 days. '''
+    ''' Seventh test. Using the day frame spanning ~3 days. '''
     # should begin April 2nd at 10:10:10:10
     begin = datetime.datetime(2018, 4, 2, 10, 10, 10, 10)
     # should end April 5th at 16:14:53:99
@@ -127,6 +127,35 @@ def test6():
     compare_intervals(interval, expected_interval)
     print('test6 passed!')
 
+def test7():
+    ''' Eighth test. Using the minute frame spanning ~3 minutes. '''
+    # should begin April 12th at 16:18:03
+    begin = datetime.datetime(2018, 4, 12, 16, 18, 3)
+    # should end April 12th at 16:20:55
+    end = datetime.datetime(2018, 4, 12, 16, 20, 55)
+    interval = arrow.Arrow.span_range('minute', begin, end)
+
+    expected_interval = [(arrow.Arrow(2018, 4, 12, 16, 18, 3), arrow.Arrow(2018, 4, 12, 16, 18, 59, 999999)),
+                         (arrow.Arrow(2018, 4, 12, 16, 19), arrow.Arrow(2018, 4, 12, 16, 19, 59, 999999)),
+                         (arrow.Arrow(2018, 4, 12, 16, 20), arrow.Arrow(2018, 4, 12, 16, 20, 54, 999999))]
+
+    compare_intervals(interval, expected_interval)
+    print('test7 passed!')
+
+def test8():
+    ''' Ninth test. Using the second frame spanning ~3 seconds. '''
+    # should begin April 12th at 16:18:03:02
+    begin = datetime.datetime(2018, 4, 12, 16, 18, 3, 2)
+    # should end April 12th at 16:18:05:01
+    end = datetime.datetime(2018, 4, 12, 16, 18, 5, 1)
+    interval = arrow.Arrow.span_range('second', begin, end)
+
+    expected_interval = [(arrow.Arrow(2018, 4, 12, 16, 18, 3, 2), arrow.Arrow(2018, 4, 12, 16, 18, 3, 999999)),
+                         (arrow.Arrow(2018, 4, 12, 16, 18, 4), arrow.Arrow(2018, 4, 12, 16, 18, 4, 999999)),
+                         (arrow.Arrow(2018, 4, 12, 16, 18, 5), arrow.Arrow(2018, 4, 12, 16, 18, 5))]
+
+    compare_intervals(interval, expected_interval)
+    print('test8 passed!')
 
 test0()
 test1()
@@ -135,3 +164,5 @@ test3()
 test4()
 test5()
 test6()
+test7()
+test8()
